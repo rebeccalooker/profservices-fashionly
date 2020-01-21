@@ -1,5 +1,5 @@
 view: users {
-  sql_table_name: public.USERS ;;
+  sql_table_name: public.users ;;
 
   parameter: all_or_completed_orders {
     type: unquoted
@@ -43,9 +43,10 @@ view: users {
   dimension: country {
     group_label: "Address"
     type: string
-    map_layer_name: countries
+#     map_layer_name: countries
     sql: ${TABLE}.country ;;
-    hidden: yes
+    hidden: no
+
   }
 
   dimension_group: created {
@@ -115,7 +116,11 @@ view: users {
     group_label: "Address"
     type: string
     sql: ${TABLE}.state ;;
-    hidden: yes
+    hidden: no
+    suggest_explore: suggestions
+    suggest_dimension: suggestions.state
+    suggest_persist_for: "1 hour"
+    drill_fields: [city]
   }
 
   dimension: traffic_source {
@@ -172,8 +177,21 @@ view: users {
       label: "Testing"
       url: "{{ link }}"
     }
+    link: {
+      label: "UBM Test"
+      url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Year={{ _filters['users.created_year'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
+    }
 #     html:  {{linked_value}} ;;
     drill_fields: [user_details*, events.count]
+#     drill_fields: [order_items.user_id, first_name]
+  }
+
+  measure: count_rolling_4_weeks {
+    type: count
+    filters: {
+      field: created_date
+      value: "4 weeks"
+    }
   }
 
   measure: number_of_customers_returning_items {
@@ -211,6 +229,11 @@ view: users {
   measure: average_days_since_signup {
     type: average
     sql: ${days_since_signup} ;;
+    drill_fields: [user_details*]
+#     link: {
+#       label: "Testing"
+#       url: "{{ link }}"
+#     }
   }
 
   measure: average_months_since_signup {

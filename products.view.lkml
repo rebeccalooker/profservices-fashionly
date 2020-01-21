@@ -7,6 +7,12 @@ view: products {
     suggest_dimension: brand
   }
 
+  parameter: category_param {
+    type: string
+    suggest_explore: products
+    suggest_dimension: products.category
+  }
+
 # ------ Dimensions ------
   dimension: id {
     primary_key: yes
@@ -23,17 +29,40 @@ view: products {
       url: "https://sandboxcl.dev.looker.com/dashboards/484?Brand%20Name={{ value }}"
       icon_url: "http://www.looker.com/favicon.ico"
     }
-    order_by_field: brand_order
+#     order_by_field: brand_order
+#     suggest_explore: products
+#     suggest_dimension: suggestions.brand_faceted
   }
+### Nope, doesn't work
+#   dimension: brand_faceted {
+#     type: string
+#     sql: {% if products.category_param_result._value == "'Accessories'" %}
+#           (select 'Adventure Time' as brand
+#           union
+#           select 'Aviator'
+#           union
+#           select 'Chaos')
+#          {% elsif products.category_param_result._value == "'Socks'" %}
+#           (select 'Burlington Socks'
+#           union
+#           select 'Extra Wide Sock Company'
+#           union
+#           select 'Original Penguin')
+#          {% else %}
+#           (select 'asdf' as brand
+#           union
+#           select 'qwer')
+#          {% endif %} ;;
+#   }
 
-  dimension: brand_order {
-    type: string
-    sql: CASE WHEN {% parameter main_brand %} = '' THEN ${brand}
-             WHEN {% condition main_brand %} ${brand} {% endcondition %} THEN 'first' || '-' || ${brand}
-          ELSE 'last'
-          END ;;
-    hidden: yes
-  }
+#   dimension: brand_order {
+#     type: string
+#     sql: CASE WHEN {% parameter main_brand %} = '' THEN ${brand}
+#              WHEN {% condition main_brand %} ${brand} {% endcondition %} THEN 'first' || '-' || ${brand}
+#           ELSE 'last'
+#           END ;;
+#     hidden: yes
+#   }
 
   dimension: category {
     type: string
@@ -43,6 +72,11 @@ view: products {
       url: "https://sandboxcl.dev.looker.com/dashboards/484?Category={{ value }}"
       icon_url: "http://www.looker.com/favicon.ico"
     }
+  }
+
+  dimension: category_param_result {
+    type: string
+    sql: {% parameter category_param %} ;;
   }
 
   dimension: cost {

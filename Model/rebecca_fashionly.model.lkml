@@ -82,7 +82,12 @@ explore: order_items {
   }
 }
 
-explore: products {}
+explore: products {
+  join: suggestions {
+    type: cross
+    relationship: many_to_one
+  }
+}
 
 explore: product_comparisons {
   view_label: "Product"
@@ -116,11 +121,11 @@ explore: users {
     -inventory_items.created_date
   ]
 
-  join: dynamic_view {
-    type: left_outer
-    sql_on: ${users.id} = ${dynamic_view.order_id} ;;
-    relationship: many_to_one
-  }
+#   join: dynamic_view {
+#     type: left_outer
+#     sql_on: ${users.id} = ${dynamic_view.order_id} ;;
+#     relationship: many_to_one
+#   }
 
   join: order_items {
     type: left_outer
@@ -184,6 +189,11 @@ explore: users {
 #       order_sequences.is_first_purchase,
 #       order_sequences.has_subsequent_order]
 #   }
+  join: suggestions {
+    type: inner
+    sql_on: ${users.state} = ${suggestions.state} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: users_ext {
@@ -194,19 +204,19 @@ explore: users_ext {
   view_label: "Users"
 }
 
-explore: custom_dimension_test {
-  from: users_ext
-  view_name: users_ext
-  fields: [ALL_FIELDS*,
-          users_ext.total_sales_to_women,
-          users_ext.average_gross_margin,
-          users_ext.total_gross_margin,
-          users_ext.average_spend_per_customer,
-          users_ext.total_sales_new_customers,
-          users_ext.number_of_customers_returning_items,
-          users_ext.percent_of_users_with_returns,
-          ]
-}
+# explore: custom_dimension_test {
+#   from: users_ext
+#   view_name: users_ext
+#   fields: [ALL_FIELDS*,
+#           users_ext.total_sales_to_women,
+#           users_ext.average_gross_margin,
+#           users_ext.total_gross_margin,
+#           users_ext.average_spend_per_customer,
+#           users_ext.total_sales_new_customers,
+#           users_ext.number_of_customers_returning_items,
+#           users_ext.percent_of_users_with_returns,
+#           ]
+# }
 
 explore: order_items_basic {
   extends: [order_items]
@@ -239,3 +249,5 @@ explore: dynamic_table {
     dynamic_table.select_table
     ]
 }
+
+explore: suggestions { hidden: yes }

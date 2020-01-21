@@ -1,3 +1,15 @@
+view: user_facts_derivative_2 {
+  derived_table: {
+    sql: select * from ${user_facts_derivative.SQL_TABLE_NAME} ;;
+  }
+}
+
+# view: user_facts_derivative {
+#   derived_table: {
+#     sql: select * from ${user_facts.SQL_TABLE_NAME} ;;
+#   }
+# }
+
 view: user_facts {
   derived_table: {
     sql:
