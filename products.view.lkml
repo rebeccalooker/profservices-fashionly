@@ -13,7 +13,22 @@ view: products {
     suggest_dimension: products.category
   }
 
+  parameter: hierarchy_selection {
+    type: string
+    allowed_value: { label: "Brand" value: "Brand" }
+    allowed_value: { label: "Category" value: "Category" }
+    allowed_value: { label: "Department" value: "Department" }
+  }
+
 # ------ Dimensions ------
+  dimension: dynamic_hierarchy_selection {
+    type: string
+    sql: {% if hierarchy_selection._parameter_value == "'Brand'" %} ${brand}
+          {% elsif hierarchy_selection._parameter_value == "'Category'" %} ${category}
+          {% else %} ${department} {% endif %};;
+#     sql: case when {% parameter hierarchy_selection %} = 'Brand' then ${brand} ... ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number

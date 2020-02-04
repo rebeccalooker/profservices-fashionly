@@ -82,7 +82,7 @@ explore: order_items {
   }
 }
 
-explore: products {
+explore: products { # hidden:  yes   -- if just making this for suggestions
   join: suggestions {
     type: cross
     relationship: many_to_one

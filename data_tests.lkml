@@ -21,9 +21,23 @@ test: test_2018_event_data {
       field: events.created_date
       value: "2018"
     }
+    timezone: "America/Los_Angeles"
   }
   assert: 2018_event_data_is_correct {
     expression: ${events.count} = 843862 ;;
   }
 }
 #
+
+test: products_mens_items {
+  explore_source: products {
+    column: count {}
+    filters: {
+      field: products.department
+      value: "Men"
+    }
+  }
+  assert: count_of_mens_products_is_correct {
+    expression: ${products.count} = 13131 ;;
+  }
+}

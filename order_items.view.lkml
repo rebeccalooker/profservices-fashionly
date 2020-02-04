@@ -9,6 +9,10 @@ view: order_items {
     suggest_dimension: returned_month_string
   }
 
+  filter: timestamp_test {
+    type: date_time
+  }
+
   dimension: id {
     primary_key: yes
     type: number
@@ -204,12 +208,11 @@ view: order_items {
   }
 
   measure: average_gross_margin {
-    description: "For order items"
     type: average
     sql: ${sale_price} - ${inventory_items.cost} ;;
     filters: {
       field: status
-      value: "-Cancelled, -Returned"
+      value: "-Cancelled, -Returned, -NULL"
       }
     value_format_name: usd
     drill_fields: [product_pricing*]

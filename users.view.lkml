@@ -87,6 +87,10 @@ view: users {
     sql: ${TABLE}.gender ;;
   }
 
+  dimension: geo_test {
+
+  }
+
   dimension: last_name {
     type: string
     sql: INITCAP(${TABLE}.last_name) ;;
@@ -180,6 +184,10 @@ view: users {
     link: {
       label: "UBM Test"
       url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Year={{ _filters['users.created_year'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
+    }
+    link: {
+      label: "UBM Test 2 - Created Date"
+      url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Date={{ _filters['users.created_date'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
     }
 #     html:  {{linked_value}} ;;
     drill_fields: [user_details*, events.count]
