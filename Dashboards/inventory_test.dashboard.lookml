@@ -439,8 +439,8 @@
     col: 16
     width: 8
     height: 6
-  - title: New Tile
-    name: New Tile 1
+  - title: Counts and stuff with formatting
+    name: Counts and stuff with formatting
     model: rebecca_fashionly
     explore: order_items
     type: looker_grid
@@ -476,8 +476,8 @@
     col: 0
     width: 11
     height: 6
-  - title: New Tile
-    name: New Tile
+  - title: Max Age with formatting
+    name: Max Age with formatting
     model: rebecca_fashionly
     explore: users
     type: looker_grid
