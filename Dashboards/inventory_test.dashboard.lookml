@@ -217,15 +217,6 @@
     col: 4
     width: 4
     height: 3
-  - name: Text Title
-    type: text
-    title_text: Text Title
-    subtitle_text: Text SubTitle
-    body_text: This is a Text
-    row: 9
-    col: 0
-    width: 8
-    height: 3
   - title: Inventory Movement
     name: Inventory Movement
     model: new_ef_sandbox
@@ -304,7 +295,6 @@
     type: single_value
     fields: [inventory_items.average_days_in_inventory, inventory_items.total_profit,
       inventory_items.average_item_profit, inventory_items.count]
-    filters: {}
     limit: 500
     custom_color_enabled: false
     custom_color: forestgreen
@@ -346,63 +336,12 @@
     col: 16
     width: 8
     height: 3
-  - title: Most Profitable Age Group
-    name: Most Profitable Age Group
-    model: new_ef_sandbox
-    explore: order_items
-    type: single_value
-    fields: [users.age_tier, order_items.sales]
-    filters:
-      order_items.sales: ">0"
-    sorts: [order_items.sales desc]
-    limit: 500
-    custom_color_enabled: false
-    custom_color: forestgreen
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    stacking: ''
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    limit_displayed_rows: false
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    series_types: {}
-    hidden_fields: [order_items.sales]
-    listen:
-      Brand: inventory_items.product_brand
-    row: 6
-    col: 8
-    width: 8
-    height: 3
   - title: Total Available Items
     name: Total Available Items
     model: new_ef_sandbox
     explore: inventory_items
     type: single_value
     fields: [inventory_items.stock_count]
-    filters: {}
     limit: 500
     column_limit: 50
     custom_color_enabled: false
@@ -495,12 +434,13 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    listen: {}
     row: 9
     col: 16
     width: 8
     height: 6
   - title: New Tile
-    name: New Tile
+    name: New Tile 1
     model: rebecca_fashionly
     explore: order_items
     type: looker_grid
@@ -537,7 +477,7 @@
     width: 11
     height: 6
   - title: New Tile
-    name: New Tile 1
+    name: New Tile
     model: rebecca_fashionly
     explore: users
     type: looker_grid
