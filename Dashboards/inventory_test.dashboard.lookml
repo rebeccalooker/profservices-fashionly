@@ -537,7 +537,7 @@
     width: 11
     height: 6
   - title: New Tile
-    name: New Tile
+    name: New Tile 1
     model: rebecca_fashionly
     explore: users
     type: looker_grid
@@ -575,7 +575,7 @@
     default_value: Calvin Klein
     allow_multiple_values: true
     required: false
-    model: new_ef_sandbox
+    model: rebecca_fashionly
     explore: products
     listens_to_filters: []
     field: inventory_items.product_brand

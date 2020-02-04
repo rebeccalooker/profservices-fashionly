@@ -7,6 +7,7 @@ include: "/data_tests_2.view"
 
 # include all the dashboards
 include: "/Examples/*.dashboard"
+include: "/Dashboards/*.dashboard"
 
 aggregate_awareness: yes
 
@@ -86,6 +87,12 @@ explore: products { # hidden:  yes   -- if just making this for suggestions
   join: suggestions {
     type: cross
     relationship: many_to_one
+  }
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${products.id} = ${inventory_items.product_id} ;;
+    relationship: one_to_many
   }
 }
 
