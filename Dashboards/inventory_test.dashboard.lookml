@@ -439,7 +439,7 @@
     col: 16
     width: 8
     height: 6
-  - title: Counts and stuff with formatting
+  - title: Counts and stuff renamed
     name: Counts and stuff with formatting
     model: rebecca_fashionly
     explore: order_items
