@@ -7,6 +7,19 @@ view: users {
     allowed_value: { label: "Completed Orders" value: "completed" }
   }
 
+  parameter: dynamic_field_selection {
+    type: unquoted
+    allowed_value: { value: "" }
+    allowed_value: { value: "city" }
+    allowed_value: { value: "country" }
+    allowed_value: { value: "state" }
+  }
+
+  dimension: dynamic_field {
+    type: string
+    sql: ${TABLE}.{% if dynamic_field_selection._parameter_value != "" %}{{ dynamic_field_selection._parameter_value }}{% else %}{{ _user_attributes['default_field'] }}{% endif %} ;;
+  }
+
   filter: user_name_for_id {
     suggest_dimension: full_name
     sql: ${id} = (select ${id} from ${TABLE}
