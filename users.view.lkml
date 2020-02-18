@@ -18,6 +18,7 @@ view: users {
   dimension: dynamic_field {
     type: string
     sql: ${TABLE}.{% if dynamic_field_selection._parameter_value != "" %}{{ dynamic_field_selection._parameter_value }}{% else %}{{ _user_attributes['default_field'] }}{% endif %} ;;
+#     sql: ${TABLE}.{{ dynamic_field_selection._parameter_value }} ;;
   }
 
   filter: user_name_for_id {
@@ -31,6 +32,11 @@ view: users {
     type: number
     sql: ${TABLE}.id ;;
     html:     <div style="width:300px;text-align:center;background-color:#ffffff;border:5px solid #e3e3e3;vertical-align:middle;font-size:24px;@{html_format__style_bold_for_certain_kpis}"><div>{{rendered_value}}</div></div>;;
+  }
+
+  dimension: age_unrestricted {
+    type:number
+    sql: ${TABLE}.age ;;
   }
 
   dimension: age {
@@ -194,14 +200,14 @@ view: users {
       label: "Testing"
       url: "{{ link }}"
     }
-    link: {
-      label: "UBM Test"
-      url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Year={{ _filters['users.created_year'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
-    }
-    link: {
-      label: "UBM Test 2 - Created Date"
-      url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Date={{ _filters['users.created_date'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
-    }
+#     link: {
+#       label: "UBM Test"
+#       url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Year={{ _filters['users.created_year'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
+#     }
+#     link: {
+#       label: "UBM Test 2 - Created Date"
+#       url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Date={{ _filters['users.created_date'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
+#     }
 #     html:  {{linked_value}} ;;
     drill_fields: [user_details*, events.count]
 #     drill_fields: [order_items.user_id, first_name]

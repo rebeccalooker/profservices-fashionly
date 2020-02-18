@@ -6,8 +6,9 @@ include: "/data_tests.lkml"
 include: "/data_tests_2.view"
 
 # include all the dashboards
-include: "/Examples/*.dashboard"
-include: "/Dashboards/*.dashboard"
+#include: "/Examples/*.dashboard"
+#include: "/Dashboards/*.dashboard"
+include: "/Dashboards/inventory_test.dashboard"
 
 aggregate_awareness: yes
 
