@@ -617,7 +617,7 @@
     default_value: Calvin Klein
     allow_multiple_values: true
     required: false
-    model: new_ef_sandbox
+    # model: rebecca_fashionly
     explore: products
     listens_to_filters: []
     field: inventory_items.product_brand

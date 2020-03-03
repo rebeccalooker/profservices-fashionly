@@ -1,14 +1,29 @@
 connection: "thelook_events_redshift"
 
 # include all the views
-include: "/*.view"
+include: "/order_items.view"
+include: "/events.view"
+include: "/users.view"
+include: "/returns.view"
+include: "/inventory_items.view"
+include: "/products.view"
+include: "/orders_completed.view"
+include: "/suggestions.view"
+include: "/product_comparisons.view"
+include: "/user_facts.view"
+include: "/user_facts_ndt.view"
+include: "/users_ext.view"
+include: "/monthly_user_orders.view"
+include: "/distribution_centers.view"
+include: "/date_series.view"
+include: "/dynamic_table.view"
 include: "/data_tests.lkml"
-include: "/data_tests_2.view"
+include: "/data_tests_2.lkml"
 
 # include all the dashboards
 #include: "/Examples/*.dashboard"
-#include: "/Dashboards/*.dashboard"
-include: "/Dashboards/inventory_test.dashboard"
+include: "/Dashboards/*.dashboard"
+# include: "/Dashboards/inventory_test.dashboard"
 
 aggregate_awareness: yes
 
@@ -31,6 +46,7 @@ explore: events {
                       , -users.percent_of_users_with_returns
                       , ]
   join: users {
+    view_label: "Join level"
    type: left_outer
    sql_on: ${events.user_id} = ${users.id} ;;
    relationship: many_to_one

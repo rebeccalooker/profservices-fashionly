@@ -1,5 +1,6 @@
 view: users {
   sql_table_name: public.users ;;
+  view_label: "View level"
 
   parameter: all_or_completed_orders {
     type: unquoted
@@ -25,6 +26,12 @@ view: users {
     suggest_dimension: full_name
     sql: ${id} = (select ${id} from ${TABLE}
           where {% condition user_name_for_id %} ${full_name} {% endcondition %}) ;;
+  }
+
+  filter: user_creation_date {
+    type: date
+    sql: ${created_raw} >= {% date_start user_creation_date %} ;;
+    convert_tz: no
   }
 
   dimension: id {
@@ -80,7 +87,7 @@ view: users {
       year
     ]
     sql: ${TABLE}.created_at ;;
-    convert_tz: no
+#     convert_tz: yes
   }
 
   dimension: email {
@@ -90,6 +97,7 @@ view: users {
   }
 
   dimension: first_name {
+    view_label: "Dimension View Label"
     type: string
     sql: INITCAP(${TABLE}.first_name) ;;
     # suggest_explore: users
@@ -200,6 +208,10 @@ view: users {
       label: "Testing"
       url: "{{ link }}"
     }
+    link: {
+      label: "By State"
+      url: "/explore/rebecca_fashionly/users?fields=users.count_of_users,users.state{% if users.created_quarter._in_query %},users.created_quarter{% endif %}&limit=500"
+    }
 #     link: {
 #       label: "UBM Test"
 #       url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Year={{ _filters['users.created_year'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
@@ -209,8 +221,15 @@ view: users {
 #       url: "/dashboards/yNFtR1FpoCexAUdqEqVtwW?Date={{ _filters['users.created_date'] | url_encode }}&Name={{ _filters['users.first_name'] | url_encode }}&State={{ _filters['users.state'] | url_encode }}"
 #     }
 #     html:  {{linked_value}} ;;
+    link: {
+      label: "chat support test"
+      url: "https://profservices.dev.looker.com/looks/497?&f[users.created_date]={{ _filters['order_items.created_date'] }}"
+    }
     drill_fields: [user_details*, events.count]
+#     html: <a href="/looks/497?&f[users.created_date]={{ _filters['users.created_date'] | url_encode }}"> TEST</a> ;;
 #     drill_fields: [order_items.user_id, first_name]
+#     html: {{ country._value }} ;;
+#     value_format: "[>=1000000]0.00,,\"M\"\"kr\";[<=-1000000]0.00,,\"M\"\"kr\";[>=1000]0.00,\"K\"\"kr\""
   }
 
   measure: count_rolling_4_weeks {

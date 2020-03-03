@@ -177,6 +177,7 @@ view: order_items {
   }
 
   measure: total_gross_revenue {
+    description: "Sum of sale price from orders not canceled or returned"
     type: sum
     sql: ${sale_price} ;;
     filters: {
