@@ -3,6 +3,20 @@
 view: order_items {
   sql_table_name: public.ORDER_ITEMS ;;
 
+  test: test_recent_event_data {
+    explore_source: events {
+      column: count { field: events.count }
+      filters: {
+#       field: created_date
+      field: events.created_date
+      value: "3 days"
+    }
+  }
+  assert: recent_events_exist {
+    expression: ${events.count} > 0 ;;
+  }
+}
+
   parameter: select_returned_month {
     type: string
 #     suggest_explore: order_items
@@ -102,6 +116,13 @@ view: order_items {
       year
     ]
     sql: ${TABLE}.shipped_at ;;
+  }
+
+  dimension_group: shipping {
+    type: duration
+    sql_start: ${shipped_raw} ;;
+    sql_end: ${delivered_raw} ;;
+    intervals: [hour, day]
   }
 
   dimension: status {

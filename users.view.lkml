@@ -93,10 +93,12 @@ view: users {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
-    hidden: yes
+    required_access_grants: [can_see_sensitive_data]
+#     hidden: yes
   }
 
-  dimension: first_name {
+  dimension: first_name_user {
+    alias: [first_name]
     view_label: "Dimension View Label"
     type: string
     sql: INITCAP(${TABLE}.first_name) ;;
@@ -202,7 +204,9 @@ view: users {
   }
   # ----------------------------------------
 
-  measure: count_of_users {
+  measure: count_of_users_old {
+    label: "Count of Users (Old)"
+    alias: [count_of_users]
     type: count
     link: {
       label: "Testing"
@@ -231,6 +235,11 @@ view: users {
 #     html: {{ country._value }} ;;
 #     value_format: "[>=1000000]0.00,,\"M\"\"kr\";[<=-1000000]0.00,,\"M\"\"kr\";[>=1000]0.00,\"K\"\"kr\""
   }
+
+#   measure: count_of_users {
+#     type: count
+#     filters: [gender: "Female"]
+#   }
 
   measure: count_rolling_4_weeks {
     type: count

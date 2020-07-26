@@ -39,6 +39,11 @@ access_grant: info_for_not_nothugo {      # my own value is 'nothugo'
   allowed_values: ["hugo"]
 }
 
+access_grant: can_see_sensitive_data {
+  user_attribute: can_see_pii
+  allowed_values: ["Yes"]
+}
+
 explore: events {
   fields: [ALL_FIELDS*, -users.average_spend_per_customer
                       , -users.total_sales_new_customers
@@ -110,6 +115,7 @@ explore: products { # hidden:  yes   -- if just making this for suggestions
     type: left_outer
     sql_on: ${products.id} = ${inventory_items.product_id} ;;
     relationship: one_to_many
+    sql_having: ${inventory_items.count} > 5 ;;
   }
 }
 
@@ -135,6 +141,15 @@ explore: product_comparisons {
 }
 
 explore: users {
+
+  sql_always_where: lower(${first_name}) like '%test%' OR lower(${last_name}) like '%test%' ;;
+  ## TeSt, tEST, ...
+
+  access_filter: {
+    user_attribute: country
+    field: users.country
+  }
+
   fields: [
     ALL_FIELDS*,
     -order_items.user_id,
