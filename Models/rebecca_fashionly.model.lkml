@@ -115,7 +115,7 @@ explore: products { # hidden:  yes   -- if just making this for suggestions
     type: left_outer
     sql_on: ${products.id} = ${inventory_items.product_id} ;;
     relationship: one_to_many
-    sql_having: ${inventory_items.count} > 5 ;;
+    # sql_having: ${inventory_items.count} > 5 ;;
   }
 }
 

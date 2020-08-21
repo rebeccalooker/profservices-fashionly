@@ -49,7 +49,7 @@ view: users {
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;
-    required_access_grants: [info_for_not_nothugo]
+    # required_access_grants: [info_for_not_nothugo]
   }
 
   dimension: age_group {
@@ -97,8 +97,8 @@ view: users {
 #     hidden: yes
   }
 
-  dimension: first_name_user {
-    alias: [first_name]
+  dimension: first_name {
+#     alias: [first_name]
     view_label: "Dimension View Label"
     type: string
     sql: INITCAP(${TABLE}.first_name) ;;

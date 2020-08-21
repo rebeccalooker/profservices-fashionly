@@ -3,20 +3,6 @@
 view: order_items {
   sql_table_name: public.ORDER_ITEMS ;;
 
-  test: test_recent_event_data {
-    explore_source: events {
-      column: count { field: events.count }
-      filters: {
-#       field: created_date
-      field: events.created_date
-      value: "3 days"
-    }
-  }
-  assert: recent_events_exist {
-    expression: ${events.count} > 0 ;;
-  }
-}
-
   parameter: select_returned_month {
     type: string
 #     suggest_explore: order_items
@@ -87,6 +73,13 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
+  dimension_group: shipping {     # asdf
+    type: duration
+    intervals: [month, year]
+    sql_start: ${shipped_raw} ;;
+    sql_end: ${delivered_raw} ;;
+  }
+
   dimension: returned_month_reverse {
     type: string
     sql: 9999999999 - extract('epoch' from cast(concat(${returned_month}, '-01') as date));;
@@ -118,12 +111,12 @@ view: order_items {
     sql: ${TABLE}.shipped_at ;;
   }
 
-  dimension_group: shipping {
-    type: duration
-    sql_start: ${shipped_raw} ;;
-    sql_end: ${delivered_raw} ;;
-    intervals: [hour, day]
-  }
+#   dimension_group: shipping {
+#     type: duration
+#     sql_start: ${shipped_raw} ;;
+#     sql_end: ${delivered_raw} ;;
+#     intervals: [hour, day]
+#   }
 
   dimension: status {
     type: string
@@ -180,7 +173,12 @@ view: order_items {
     type: sum
     sql: ${sale_price} ;;
     value_format_name: usd
-    filters: { field: users.gender value: "f" }
+    filters: { field: users.gender value: "Female" }
+  }
+
+  measure: percent {
+    sql: ${total_sales_to_women} / ${total_sale_price} ;;
+    value_format_name: percent_2
   }
 
   measure: average_sale_price {
@@ -405,3 +403,17 @@ view: order_items {
     ]
   }
 }
+
+# test: test_recent_event_data {
+#   explore_source: events {
+#     column: count { field: events.count }
+#     filters: {
+# #       field: created_date
+#     field: events.created_date
+#     value: "3 days"
+#   }
+# }
+# assert: recent_events_exist {
+#   expression: ${events.count} > 0 ;;
+# }
+# }
