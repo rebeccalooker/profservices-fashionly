@@ -142,9 +142,6 @@ explore: product_comparisons {
 
 explore: users {
 
-  sql_always_where: lower(${first_name}) like '%test%' OR lower(${last_name}) like '%test%' ;;
-  ## TeSt, tEST, ...
-
   access_filter: {
     user_attribute: country
     field: users.country
