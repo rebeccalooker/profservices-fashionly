@@ -4,6 +4,7 @@ connection: "thelook_events_redshift"
 include: "/order_items.view"
 include: "/events.view"
 include: "/users.view"
+include: "/users_teach.view"
 include: "/returns.view"
 include: "/inventory_items.view"
 include: "/products.view"
@@ -79,10 +80,10 @@ explore: order_items {
 #     filters: { field: order_items.created_date value: "3 days" }
 #   }
   view_label: "(1) Orders and Items"
-  join: users {
+  join: users_teach {
     view_label: "(2) Users"
     type: left_outer
-    sql_on: ${order_items.user_id} = ${users.id} ;;
+    sql_on: ${order_items.user_id} = ${users_teach.id} ;;
     relationship: many_to_one
 #     sql_where: ${users.country} = 'US' ;;
   }
