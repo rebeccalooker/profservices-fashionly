@@ -73,9 +73,7 @@ explore: events {
 
 
 explore: order_items {
-  fields: [ALL_FIELDS*,
-#     -users.count_orders_dynamic
-    ]
+
 #   always_filter: {
 #     filters: { field: order_items.created_date value: "3 days" }
 #   }
@@ -86,6 +84,13 @@ explore: order_items {
     sql_on: ${order_items.user_id} = ${users_teach.id} ;;
     relationship: many_to_one
 #     sql_where: ${users.country} = 'US' ;;
+  }
+
+  join: user_facts {
+    view_label: "(2) Users"
+    type: left_outer
+    sql_on: ${users_teach.id} = ${user_facts.user_id} ;;
+    relationship: one_to_one
   }
 
   join: inventory_items {
