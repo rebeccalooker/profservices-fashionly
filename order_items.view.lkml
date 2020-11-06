@@ -9,6 +9,27 @@ view: order_items {
     suggest_dimension: returned_month_string
   }
 
+  parameter: compare_to_other_brands {
+    type: yesno
+  }
+
+  dimension: using_compare_parameter {
+    type: string
+    sql: {% if compare_to_other_brands._parameter_value == 'true' %}
+    ${order_id}
+    {% else %} ${id}
+    {% endif %} ;;
+  }
+
+  dimension: case_substitution_syntax_test {
+    case: {
+      when: { sql: ${id} = 1 ;; label: "$_{id}" }
+      when: { sql: ${id} = 2 ;; label: "$_{order_id}" }
+      when: { sql: ${id} = 3 ;; label: "$_{user_id}" }
+      else: "asdf"
+    }
+  }
+
   filter: timestamp_test {
     type: date_time
   }
@@ -45,6 +66,12 @@ view: order_items {
       year
     ]
     sql: ${TABLE}.delivered_at ;;
+  }
+
+  dimension: gross_margin {
+    type: number
+    sql: ${sale_price} - ${inventory_items.cost} ;;
+    value_format_name: usd
   }
 
   dimension: inventory_item_id {
@@ -225,6 +252,17 @@ view: order_items {
       }
     value_format_name: usd
     drill_fields: [brand_details*]
+    # html:
+    # <details>
+    # <summary style="outline:none">{{ total_gross_margin._linked_value }}
+    # </summary> Sale Price: {{ total_sale_price._linked_value }}
+    # <br/>
+    # Inventory Costs: {{ inventory_items.total_cost._linked_value }}
+    # </details>
+    # ;;
+    html:
+    {{ linked_value }}: {{ total_sale_price._linked_value }} Sale Price | {{ inventory_items.total_cost._linked_value }} Inventory Costs
+    ;;
   }
 
   measure: average_gross_margin {
@@ -349,6 +387,7 @@ view: order_items {
     type: date_time
     sql: max(${created_time}) ;;
   }
+
 
   # ------ Parameters ------
   ## produce "FILTER-ONLY FIELDS" in frontend

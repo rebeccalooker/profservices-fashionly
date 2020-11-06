@@ -27,6 +27,9 @@ view: user_facts {
         GROUP BY customer_id, first_name, last_name, u.age, u.gender
       ;;
     sql_trigger_value: SELECT CURRENT_DATE ;;
+
+    persist_for: "24 hours"
+
     indexes: ["customer_id"]
     distribution_style: all
   }

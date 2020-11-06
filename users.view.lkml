@@ -1,6 +1,8 @@
+
+
 view: users {
   sql_table_name: public.users ;;
-  view_label: "View level"
+  view_label: "Users"
 
   parameter: all_or_completed_orders {
     type: unquoted
@@ -97,9 +99,9 @@ view: users {
 #     hidden: yes
   }
 
-  dimension: first_name {
-#     alias: [first_name]
-    view_label: "Dimension View Label"
+  dimension: name_first {
+    alias: [first_name]
+    label: "First Name"
     type: string
     sql: INITCAP(${TABLE}.first_name) ;;
     # suggest_explore: users
@@ -108,7 +110,7 @@ view: users {
 
   dimension: full_name {
     type: string
-    sql: ${first_name} || ' ' || ${last_name} ;;
+    sql: ${name_first} || ' ' || ${last_name} ;;
   }
 
   dimension: gender {
@@ -357,7 +359,7 @@ view: users {
   set: user_details {
     fields: [
       id,
-      first_name,
+      name_first,
       last_name,
       age_group,
       gender,

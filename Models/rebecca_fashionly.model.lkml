@@ -19,6 +19,7 @@ include: "/date_series.view"
 include: "/dynamic_table.view"
 include: "/data_tests.lkml"
 include: "/data_tests_2.lkml"
+include: "/data_tests_5.lkml"
 
 # include all the dashboards
 #include: "/Examples/*.dashboard"
@@ -44,14 +45,25 @@ access_grant: can_see_sensitive_data {
   allowed_values: ["Yes"]
 }
 
+# access_grant: rhwtest {
+#   user_attribute: rhw_test_1
+#   allowed_values: ["a"]
+# }
+
 explore: events {
   fields: [ALL_FIELDS*, -users.average_spend_per_customer
                       , -users.total_sales_new_customers
                       , -users.number_of_customers_returning_items
                       , -users.percent_of_users_with_returns
                       , ]
+#   access_filter: {
+#     user_attribute: rhw_test_1
+#     field: browser
+#   }
+#   required_access_grants: [rhwtest]
+
   join: users {
-    view_label: "Join level"
+    # view_label: "Join level"
    type: left_outer
    sql_on: ${events.user_id} = ${users.id} ;;
    relationship: many_to_one
@@ -66,7 +78,9 @@ explore: order_items {
 #   always_filter: {
 #     filters: { field: order_items.created_date value: "3 days" }
 #   }
+  view_label: "(1) Orders and Items"
   join: users {
+    view_label: "(2) Users"
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
@@ -74,12 +88,14 @@ explore: order_items {
   }
 
   join: inventory_items {
+    view_label: "(3) Inventory"
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
 
   join: products {
+    view_label: "(4) Products"
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
@@ -142,10 +158,10 @@ explore: product_comparisons {
 
 explore: users {
 
-  access_filter: {
-    user_attribute: country
-    field: users.country
-  }
+#   access_filter: {
+#     user_attribute: country
+#     field: users.country
+#   }
 
   fields: [
     ALL_FIELDS*,
