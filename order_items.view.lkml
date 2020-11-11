@@ -236,10 +236,8 @@ view: order_items {
   measure: average_gross_revenue {
     type: average
     sql: ${sale_price} ;;
-    filters: {
-      field: status
-      value: "-Cancelled, -Returned"
-        }
+    filters: [status: "-Cancelled, -Returned"]
+    filters: [created_date: "-NULL"]
     value_format_name: usd
   }
 
@@ -386,6 +384,12 @@ view: order_items {
   measure: latest_order {
     type: date_time
     sql: max(${created_time}) ;;
+  }
+
+  measure: orders_list {
+    type: list
+    list_field: order_id
+    order_by_field: total_sale_price
   }
 
 

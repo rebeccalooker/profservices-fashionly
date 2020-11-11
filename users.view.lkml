@@ -65,7 +65,7 @@ view: users {
     group_label: "Address"
     type: string
     sql: ${TABLE}.city ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: country {
@@ -336,6 +336,12 @@ view: users {
     type: max
     sql: ${age} ;;
     html:     <div class="vis" style="text-align:center;background-color:#ffffff;border:5px solid #e3e3e3;vertical-align:middle;font-size:20px;@{html_format__style_bold_for_certain_kpis}">     <div>{{rendered_value}}</div></div>;;
+  }
+
+  measure: user_cities {
+    type: list
+    list_field: city
+    order_by_field: count_of_users_old
   }
 
 ### Playing around with dynamic view selection for Wave HQ

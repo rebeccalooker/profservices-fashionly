@@ -220,7 +220,7 @@ explore: users {
   join: user_facts {
     view_label: "Customer Facts"
     type: inner
-    sql_on: ${users.id} = ${user_facts.customer_id} ;;
+    sql_on: ${users.id} = ${user_facts.user_id} ;;
     relationship: one_to_one
   }
 
