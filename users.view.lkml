@@ -236,6 +236,7 @@ view: users {
 #     drill_fields: [order_items.user_id, first_name]
 #     html: {{ country._value }} ;;
 #     value_format: "[>=1000000]0.00,,\"M\"\"kr\";[<=-1000000]0.00,,\"M\"\"kr\";[>=1000]0.00,\"K\"\"kr\""
+
   }
 
 #   measure: count_of_users {
@@ -342,6 +343,12 @@ view: users {
     type: list
     list_field: city
     order_by_field: count_of_users_old
+  }
+
+  measure: user_cities_string {
+    type: string
+    sql: LISTAGG( distinct ${city}, ', ' )
+      WITHIN GROUP (ORDER BY ${count_of_users_old} desc) ;;
   }
 
 ### Playing around with dynamic view selection for Wave HQ
