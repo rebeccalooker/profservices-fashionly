@@ -1,6 +1,13 @@
 view: gc_cl_2020_feedback {
-  sql_table_name: `rebeccaland.internal.gc_cl_2020_feedback`
+  sql_table_name: (select *, GENERATE_UUID() uuid
+                  from `rebeccaland.internal.gc_cl_2020_feedback`)
     ;;
+
+  dimension: uuid {
+    type: string
+    sql: ${TABLE}.uuid ;;
+    primary_key: yes
+  }
 
   dimension: additional_notes {
     type: string
@@ -35,6 +42,17 @@ view: gc_cl_2020_feedback {
     type: string
     sql: ${TABLE}.instructors ;;
   }
+
+  dimension: keywords {
+    type: string
+    sql: ${TABLE}.keywords ;;
+    hidden: yes
+  }
+
+  # dimension: keywords_separated {
+  #   type: string
+  #   sql: split(${keywords},',') ;;
+  # }
 
   dimension: met_agenda_expectations {
     group_label: "Scales of 1-5"
@@ -105,16 +123,10 @@ view: gc_cl_2020_feedback {
     sql: ${average_overall_from_individual} ;;
     value_format_name: decimal_2
   }
+}
 
-
-
-
-
-
-
-
-
-
-
-
+view: keywords_separated {
+  dimension: keywords_separated {
+    sql: keywords_separated ;;
+  }
 }

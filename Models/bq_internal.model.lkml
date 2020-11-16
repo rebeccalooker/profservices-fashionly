@@ -13,4 +13,8 @@ explore: ps_webinar_feedback { label: "PS Webinar Feedback" }
 explore: gc_cl_2020_feedback {
   label: "Controlled Launch 2020 Feedback"
   view_label: "Feedback"
+
+  join: keywords_separated {
+    sql: , UNNEST(SPLIT(keywords,',')) AS keywords_separated ;;
+  }
 }
