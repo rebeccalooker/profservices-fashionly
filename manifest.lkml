@@ -7,6 +7,28 @@ project_name: "rebecca_fashionly"
 #   project: "name_of_other_project"
 # }
 
+constant: sql_time_front {
+  value: "TO_CHAR(DATE_TRUNC('second', CONVERT_TIMEZONE('UTC', 'America/New_York', "
+}
+constant: sql_time_back {
+  value: ")), 'YYYY-MM-DD HH24:MI:SS')"
+}
+
+constant: sql_date_front {
+  value: "DATE(CONVERT_TIMEZONE('UTC', 'America/New_York', "
+}
+constant: sql_date_back {
+  value: "))"
+}
+
+constant: sql_week_front {
+  value: "TO_CHAR(DATE_TRUNC('week', CONVERT_TIMEZONE('UTC', 'America/New_York', "
+}
+constant: sql_week_back {
+  value: ")), 'YYYY-MM-DD')"
+}
+
+
 constant: html_format__red_as_negative {
   value: "<div style='color:{%if value < 0%}#ff0000{%else%}#00b04f{%endif%}'>{{rendered_value}}</div>"
 }

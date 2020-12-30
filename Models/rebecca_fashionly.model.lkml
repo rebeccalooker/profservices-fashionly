@@ -2,9 +2,11 @@ connection: "thelook_events_redshift"
 
 # include all the views
 include: "/order_items.view"
+include: "/views/order_items.view"
 include: "/events.view"
 include: "/users.view"
 include: "/users_teach.view"
+include: "/users_another.view"
 include: "/returns.view"
 include: "/inventory_items.view"
 include: "/products.view"
@@ -12,7 +14,7 @@ include: "/orders_completed.view"
 include: "/suggestions.view"
 include: "/product_comparisons.view"
 include: "/user_facts.view"
-include: "/user_facts_ndt.view"
+# include: "/user_facts_ndt.view"
 include: "/users_ext.view"
 include: "/monthly_user_orders.view"
 include: "/distribution_centers.view"
@@ -27,7 +29,7 @@ include: "/data_tests_5.lkml"
 include: "/Dashboards/*.dashboard"
 # include: "/Dashboards/inventory_test.dashboard"
 
-aggregate_awareness: yes
+# aggregate_awareness: yes
 
 datagroup: rebecca_fashionly_default_datagroup {
   sql_trigger: SELECT COUNT(*) FROM {{ _user_attributes['my_tables'] }}.columns ;;
@@ -309,3 +311,7 @@ explore: dynamic_table {
 }
 
 explore: suggestions { hidden: yes }
+
+explore: users_another {}
+
+explore: order_items_2 {}

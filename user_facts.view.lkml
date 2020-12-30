@@ -88,7 +88,7 @@ view: user_facts_ndt {
   derived_table: {
     # datagroup_trigger: rebecca_fashionly_default_datagroup
     # distribution_style: even
-    sortkeys: ["id"]
+    # sortkeys: ["id"]
     explore_source: users {
       column: id {}
       column: count_orders_made { field: order_items.count_orders_made }
