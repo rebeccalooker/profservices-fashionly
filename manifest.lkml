@@ -8,7 +8,7 @@ project_name: "rebecca_fashionly"
 # }
 
 constant: sql_time_front {
-  value: "TO_CHAR(DATE_TRUNC('second', CONVERT_TIMEZONE('UTC', 'America/New_York', "
+  value: "TO_CHAR(DATE_TRUNC('second', CONVERT_TIMEZONE('UTC', {% parameter select_timezone %}, "
 }
 constant: sql_time_back {
   value: ")), 'YYYY-MM-DD HH24:MI:SS')"

@@ -54,6 +54,11 @@ access_grant: can_see_sensitive_data {
 # }
 
 explore: events {
+  access_filter: {
+    user_attribute: rhw_test_1
+    field: event_type
+  }
+
   fields: [ALL_FIELDS*, -users.average_spend_per_customer
                       , -users.total_sales_new_customers
                       , -users.number_of_customers_returning_items

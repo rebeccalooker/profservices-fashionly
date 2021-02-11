@@ -8,6 +8,12 @@ view: order_items_2 {
     sql: ${TABLE}.id ;;
   }
 
+  parameter: select_timezone {
+    type: string
+    allowed_value: { value: "America/New_York" }
+    allowed_value: { value: "America/Los_Angeles" }
+  }
+
   dimension: created_time {
     type: string
     sql: @{sql_time_front} ${TABLE}.created_at @{sql_time_back} ;;
